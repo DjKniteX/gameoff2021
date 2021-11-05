@@ -123,6 +123,21 @@ a:hover {
   border-radius: 5px;
 }
 
+#plate1 {
+  display: flex;
+  animation: 5s plate-fade;
+  opacity: 0;
+}
+
+#plate1 > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  padding: 40px;
+  border-radius: 5px;
+}
+
 @keyframes plate-fade {
   0% {
     opacity: 0;

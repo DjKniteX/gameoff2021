@@ -1183,10 +1183,14 @@
   } else {
     // listen for the end of the title
     // animation to show the first screen
-    $("#plate").addEventListener(
+    $("#plate").addEventListener("animationend", () => {
+      console.log("hi");
+    });
+    $("#plate1").addEventListener(
       "animationend",
       showScreen.bind(null, "title")
     );
+
     // listen for clicks on the front screen menu options
     document.querySelectorAll("#options #menu input").forEach(function (el) {
       el.addEventListener("touchstart", handleMenuChange.bind(null, el));
