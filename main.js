@@ -120,9 +120,6 @@
     "btn-down": 4,
   };
 
-  // Stages
-  let stage = 1;
-
   /*****************
    *** game code ***
    *****************/
@@ -150,7 +147,7 @@
     // reference to the player object
     player: null,
     // reference to the game monsters array
-    monsters: null,
+    monsters: [],
     // the position of the amulet in the map
     // as `x,y` so it can be checked against
     // the map keys above
@@ -161,6 +158,7 @@
     arrowListener: null, // registered listener for arrow event
     // clean up this game instance
     // we keep a reference for live-reloading
+    stage: 1,
     cleanup: cleanup,
   };
 
@@ -215,6 +213,7 @@
       game.player = null;
       game.monsters = null;
       game.amulet = null;
+      game.stage = 1;
     }
 
     // hide the toast message
@@ -270,6 +269,10 @@
     // starting tiles, which must be from the walkable list
     game.player = createBeing(makePlayer, freeCells);
     game.monsters = [createBeing(makeMonster, freeCells)];
+
+    for (let i = 0; i < Game.stage; i++) {
+      game.monsters.push(createBeing(makeMonster, freeCells));
+    }
 
     // draw the map and items
     for (let key in game.map) {
@@ -429,7 +432,7 @@
         ["p", "Trash"],
       ],
       // the player's stats
-      stats: { name: "Quintin", hp: 10, xp: 1, gold: 0, stage: stage },
+      stats: { name: "Quintin", hp: 10, score: 0, stage: Game.stage },
       // the ROT.js scheduler calls this method when it is time
       // for the player to act
       // what this does is lock the engine to take control
@@ -457,10 +460,9 @@
       // increment their gold stat,
       // show a message, re-render the stats
       // then play the pickup/win sound
-      Game.player.stats.gold += 1;
-      console.log(Game.player.stats.gold);
+      Game.player.stats.score += 1;
       renderStats(Game.player.stats);
-      toast("You found gold!");
+      toast("You found bug stuff!");
       sfx["win"].play();
       delete Game.items[key];
     } else if (Game.items[key] == "*") {
@@ -551,7 +553,7 @@
       // the name to display in combat
       name: "The Human",
       // the monster's stats
-      stats: { hp: 14 },
+      stats: { hp: 1 },
       // called by the ROT.js scheduler
       act: monsterAct,
     };
@@ -629,6 +631,8 @@
         const key = m._x + "," + m._y;
         removeMonster(m);
         sfx["kill"].play();
+        Game.player.stats.score += 1;
+        renderStats(Game.player.stats);
         return true;
       }
     }
@@ -686,7 +690,7 @@
     }
     // tear down the game
     destroy(Game);
-    console.log(`You are now going into Stage: ${(stage += 1)}`);
+    console.log(`You are now going into Stage: ${(Game.stage += 1)}`);
     // show the blingy "win" screen to the user
     showScreen("win");
   }
@@ -708,7 +712,7 @@
     // wait 2 seconds for the ghost animation to finish
     setTimeout(function () {
       // set our stats for the end screen
-      setEndScreenValues(Game.player.stats.xp, Game.player.stats.gold);
+      setEndScreenValues(Game.player.stats.stage, Game.player.stats.stage);
       // tear down the game
       destroy(Game);
       // show the "lose" screen to the user
@@ -826,8 +830,8 @@
 
   // set the end-screen message to show
   // how well the player did
-  function setEndScreenValues(xp, gold) {
-    $$(".xp-stat").forEach((el) => (el.textContent = Math.floor(xp)));
+  function setEndScreenValues(score, gold) {
+    $$(".xp-stat").forEach((el) => (el.textContent = Math.floor(score)));
     $$(".gold-stat").forEach((el) => (el.textContent = gold));
   }
 
@@ -1126,7 +1130,9 @@
   // this function gets called from the first screen
   // when the "play" button is clicked.
   function startGame(ev) {
+    destroy(Game);
     showScreen("game");
+    console.log(`You are now playing Stage: ${Game.stage}`);
     sfx["rubber"].play();
     // if this was a touch event show the arrows buttons
     if (ev["touches"]) {
@@ -1183,9 +1189,7 @@
   } else {
     // listen for the end of the title
     // animation to show the first screen
-    $("#plate").addEventListener("animationend", () => {
-      console.log("hi");
-    });
+    $("#plate").addEventListener("animationend", () => {});
     $("#plate1").addEventListener(
       "animationend",
       showScreen.bind(null, "title")

@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>Roguelike Browser Boilerplate</title>
+    <title>Look Out! - Game Off 2021</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Your game description goes here.">
-    <link rel="icon" href="icon.png">
+    <link rel="icon" href="icon1.png">
     <script src="https://cdn.jsdelivr.net/npm/rot-js@2/dist/rot.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/chr15m/jsfxr@42a643f/riffwave.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/chr15m/jsfxr@42a643f/sfxr.js"></script>
@@ -80,7 +80,6 @@
       </div>
       <button id="play" class="nes-btn is-success action">Play</button>
       <br />
-      <h3>by TEAM SKYNITE</h3>
       <h5>teamskynite.net</h5>
     </div>
 
@@ -114,6 +113,7 @@
           <li>Audio/Sounds: Quintin</li>
           <li>Programmer: Matthew</li>
           <li>Programmer: Nikki</li>
+          <li>Cover art by: husalnawar25</li>
         </ul>
       </div>
       <button class="nes-btn is-success action">Ok</button>
@@ -136,7 +136,7 @@
         <p><div class="sprite amulet"></div></p>
         <p>You found your friends and successfully escaped from this place! Now to continue to save everybody else.</p>
       </div>
-      <button class="nes-btn is-success nextStage">Next Stage</button>
+      <button id="nextStage" class="nes-btn is-success action">Next Stage</button>
       <button class="nes-btn is-error action">Main Menu</button>
     </div>
 
@@ -147,7 +147,7 @@
         <div class="sprite tomb"></div>
         <p>Oh no,The Human exterminated you, your family, and everyone you know. </p>
         <p>You're dead.</p>
-        <p>You only saved <span class="gold-stat"></span> before you died</p>
+        <p>You went as far as Stage <span class="gold-stat"></span> before you died</p>
       </div>
       <button class="nes-btn is-success action">Ok</button>
     </div>

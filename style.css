@@ -352,7 +352,7 @@ a:hover {
 #hud {
   position: absolute;
   bottom: 0px;
-  width: 900px;
+  width: 925px;
   max-width: 100%;
   display: flex;
   justify-content: space-evenly;
