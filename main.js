@@ -159,7 +159,9 @@
     // clean up this game instance
     // we keep a reference for live-reloading
     stage: 1,
+    maxStage: 3,
     cleanup: cleanup,
+    score: 0
   };
 
   // this gets called by the menu system
@@ -192,6 +194,13 @@
     game.engine.start();
   }
 
+  //load the next level of the game
+  //use this to not reset score and items on new level
+  function loadNextLevel(game){
+    //temporarily call init
+    init(game);
+  }
+
   // this gets called at the end of the game when we want
   // to exit back out and clean everything up to display
   // the menu and get ready for next round
@@ -214,6 +223,7 @@
       game.monsters = null;
       game.amulet = null;
       game.stage = 1;
+      game.score = 0;
     }
 
     // hide the toast message
@@ -432,7 +442,7 @@
         ["p", "Trash"],
       ],
       // the player's stats
-      stats: { name: "Quintin", hp: 10, score: 0, stage: Game.stage },
+      stats: { name: "Quintin", hp: 10, score: Game.score, stage: Game.stage },
       // the ROT.js scheduler calls this method when it is time
       // for the player to act
       // what this does is lock the engine to take control
@@ -454,13 +464,15 @@
     const key = entity._x + "," + entity._y;
     if (key == Game.amulet) {
       // the amulet is hit initiate the win flow below
-      win();
+      //check if level is cleared or game is won
+      Game.stage == Game.maxStage ? realWin() : win();
     } else if (Game.items[key] == "g") {
       // if the player stepped on gold
       // increment their gold stat,
       // show a message, re-render the stats
       // then play the pickup/win sound
-      Game.player.stats.score += 1;
+      Game.score += 1;
+      Game.player.stats.score = Game.score;
       renderStats(Game.player.stats);
       toast("You found bug stuff!");
       sfx["win"].play();
@@ -631,7 +643,8 @@
         const key = m._x + "," + m._y;
         removeMonster(m);
         sfx["kill"].play();
-        Game.player.stats.score += 1;
+        Game.score += 1;
+        Game.player.stats.score = Game.score;
         renderStats(Game.player.stats);
         return true;
       }
@@ -679,7 +692,7 @@
     checkDeath(receiver);
   }
 
-  // this gets called when the player wins the game
+  // this gets called when the player clears a stage
   function win() {
     Game.engine.lock();
     // play the win sound effect a bunch of times
@@ -689,10 +702,24 @@
       }, 100 * i);
     }
     // tear down the game
-    destroy(Game);
     console.log(`You are now going into Stage: ${(Game.stage += 1)}`);
     // show the blingy "win" screen to the user
     showScreen("win");
+  }
+
+  //this get called when player wins game
+  function realWin(){
+    Game.engine.lock();
+    // play the win sound effect a bunch of times
+    for (let i = 0; i < 5; i++) {
+      setTimeout(function () {
+        sfx["win"].play();
+      }, 100 * i);
+    }
+    // tear down the game
+    destroy(Game);
+    // show the blingy "win" screen to the user
+    showScreen("realWin");
   }
 
   // this gets called when the player loses the game
@@ -826,6 +853,14 @@
     if (actionbutton) {
       actionbutton.focus();
     }
+  }
+
+  //go to the next Stage
+  nextStage = function nextStage(){
+    showScreen("game");
+    console.log(`You are now playing Stage: ${Game.stage}`);
+    sfx["rubber"].play();
+    loadNextLevel(Game);
   }
 
   // set the end-screen message to show

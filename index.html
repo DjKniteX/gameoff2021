@@ -117,7 +117,7 @@
         </ul>
       </div>
       <button class="nes-btn is-success action">Ok</button>
-    </div>    
+    </div>
 
     <!-- instructions screen -->
     <div id="instructions" class="screen modal">
@@ -129,14 +129,24 @@
       <button class="nes-btn is-success action">Ok</button>
     </div>
 
-    <!-- win screen -->
+    <!-- stage win screen -->
     <div id="win" class="screen modal">
       <p class="nes-container is-rounded is-dark">Stage cleared!</p>
       <div class="nes-container is-rounded is-dark">
         <p><div class="sprite amulet"></div></p>
         <p>You found your friends and successfully escaped from this place! Now to continue to save everybody else.</p>
       </div>
-      <button id="nextStage" class="nes-btn is-success action">Next Stage</button>
+      <button id="nextStage" class="nes-btn is-success" onclick="nextStage()">Next Stage</button>
+      <button class="nes-btn is-error action">Main Menu</button>
+    </div>
+
+    <!-- game win screen -->
+    <div id="realWin" class="screen modal">
+      <p class="nes-container is-rounded is-dark">Congrats! <br> You Win!</p>
+      <div class="nes-container is-rounded is-dark">
+        <p><div class="sprite amulet"></div></p>
+        <p>You found all your friends in the house. Time to find a new home</p>
+      </div>
       <button class="nes-btn is-error action">Main Menu</button>
     </div>
 
