@@ -258,6 +258,7 @@ a:hover {
 }
 
 /* bugs */
+
 #bug{
   display: block;
   width: 8px;
@@ -277,10 +278,11 @@ a:hover {
   content: url(termite.png);
 }
 .mantis{
-  content: url(bigwig.png);
+  content: url(mr.flea.png);
 }
 .spider{
-  content: url(bigwig.png);
+  content: url(blue.png);
+  transform: scale(25);
 }
 
 
@@ -317,8 +319,17 @@ a:hover {
   transform: none;
 }
 
-.amulet {
+.mantisClaws {
   background-position: -0px -64px;
+}
+.item2 {
+  background-position: -8px -64px;
+}
+.item3 {
+  background-position: -16px -64px;
+}
+.item4 {
+  background-position: -24px -64px;
 }
 
 .tomb {
