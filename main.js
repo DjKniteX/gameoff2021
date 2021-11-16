@@ -161,7 +161,9 @@
     stage: 1,
     maxStage: 3,
     cleanup: cleanup,
-    score: 0
+    score: 0,
+    currentBug: "",
+    listOfBugs: []
   };
 
   // this gets called by the menu system
@@ -188,6 +190,11 @@
 
     // render the stats hud at the bottom of the screen
     renderStats(game.player.stats);
+
+    //bug list for win screen
+    if(currentBug === ""){
+      game.listOfBugs.push("earwig", "fly", "termite", "mantis", "spider");
+    }
 
     // kick everything off
     game.engine = new ROT.Engine(game.scheduler);
@@ -224,6 +231,8 @@
       game.amulet = null;
       game.stage = 1;
       game.score = 0;
+      game.currentBug = "";
+      //game.listOfBugs = ["earwig", "fly", "termite", "mantis", "spider"]
     }
 
     // hide the toast message
@@ -463,6 +472,7 @@
   function checkItem(entity) {
     const key = entity._x + "," + entity._y;
     if (key == Game.amulet) {
+      renderBug();//maybe move this into win()
       // the amulet is hit initiate the win flow below
       //check if level is cleared or game is won
       Game.stage == Game.maxStage ? realWin() : win();
@@ -690,6 +700,29 @@
     }
     // check if the receiver has died
     checkDeath(receiver);
+  }
+
+  //show a bug that you have rescued
+  function renderBug(){
+    //change the class of the image to be a random bug
+    //when you choose a bug remove it from the option of bugs to get
+    //fix CSS for the bugs and stuff
+    //amulet image should be an image of the item that bug gives you
+    var bugList = Game.listOfBugs;
+    const el = $("#bug");
+    console.log("current: " + Game.currentBug);
+    if(Game.currentBug !== ""){
+      el.classList.remove(Game.currentBug);
+    }
+    void el.offsetHeight; // trigger CSS reflow
+    var random = Math.floor(Math.random() * bugList.length);
+    var newBug = bugList[random];
+    currentBug = newBug;
+    console.log("Current is now new: " + currentBug)
+    //TODO remove the bug we just got
+    bugList.pop(newBug);
+    console.log(bugList);
+    el.classList.add(newBug);  
   }
 
   // this gets called when the player clears a stage
