@@ -493,6 +493,14 @@ a:hover {
   padding: 0px;
 }
 
+.gold-stat {
+  color: red;
+}
+
+.score-stat {
+  color: gold;
+}
+
 @media (max-width: 1024px) {
   #arrows > * {
     bottom: 72px;

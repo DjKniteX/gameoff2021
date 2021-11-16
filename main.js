@@ -159,9 +159,10 @@
     // clean up this game instance
     // we keep a reference for live-reloading
     stage: 1,
-    maxStage: 3,
+    maxStage: 5,
     cleanup: cleanup,
     score: 0,
+    hp: 12,
     currentBug: "",
     listOfBugs: []
   };
@@ -203,7 +204,7 @@
 
   //load the next level of the game
   //use this to not reset score and items on new level
-  function loadNextLevel(game){
+  function loadNextLevel(game) {
     //temporarily call init
     init(game);
   }
@@ -231,8 +232,8 @@
       game.amulet = null;
       game.stage = 1;
       game.score = 0;
+      game.hp = 10;
       game.currentBug = "";
-      //game.listOfBugs = ["earwig", "fly", "termite", "mantis", "spider"]
     }
 
     // hide the toast message
@@ -451,7 +452,12 @@
         ["p", "Trash"],
       ],
       // the player's stats
-      stats: { name: "Quintin", hp: 10, score: Game.score, stage: Game.stage },
+      stats: {
+        name: "Quintin",
+        hp: Game.hp,
+        score: Game.score,
+        stage: Game.stage,
+      },
       // the ROT.js scheduler calls this method when it is time
       // for the player to act
       // what this does is lock the engine to take control
@@ -575,7 +581,7 @@
       // the name to display in combat
       name: "The Human",
       // the monster's stats
-      stats: { hp: 1 },
+      stats: { hp: 10 },
       // called by the ROT.js scheduler
       act: monsterAct,
     };
@@ -653,7 +659,7 @@
         const key = m._x + "," + m._y;
         removeMonster(m);
         sfx["kill"].play();
-        Game.score += 1;
+        Game.score += 3;
         Game.player.stats.score = Game.score;
         renderStats(Game.player.stats);
         return true;
@@ -680,8 +686,20 @@
     // the user what is happening
     let msg = [];
     // roll a dice to see if the player hits
-    const roll1 = ROT.RNG.getItem([1, 2, 3, 4, 5, 6]);
+    let roll1 = ROT.RNG.getItem([1, 2, 3, 4, 5, 6]);
     // a hit is a four or more
+    // if (hitter.inventory[0]) {
+    //   roll1 += 1;
+    // }
+
+    if (hitter.name == "you") {
+      if (Game.player.inventory[0].includes("x")) {
+        roll1 += 1;
+      } else {
+        console.log("what");
+      }
+    }
+
     if (roll1 > 3) {
       // add to the combat message
       msg.push(hitter.name + " hit " + receiver.name + ".");
@@ -700,6 +718,7 @@
     }
     // check if the receiver has died
     checkDeath(receiver);
+    console.log(`${hitter.name} did ${roll1} damage`);
   }
 
   //show a bug that you have rescued
@@ -722,7 +741,7 @@
     //TODO remove the bug we just got
     bugList.pop(newBug);
     console.log(bugList);
-    el.classList.add(newBug);  
+    el.classList.add(newBug);
   }
 
   // this gets called when the player clears a stage
@@ -736,12 +755,14 @@
     }
     // tear down the game
     console.log(`You are now going into Stage: ${(Game.stage += 1)}`);
+    Game.score += 50;
+    Game.hp += 5;
     // show the blingy "win" screen to the user
     showScreen("win");
   }
 
   //this get called when player wins game
-  function realWin(){
+  function realWin() {
     Game.engine.lock();
     // play the win sound effect a bunch of times
     for (let i = 0; i < 5; i++) {
@@ -750,6 +771,9 @@
       }, 100 * i);
     }
     // tear down the game
+    $$(".score-stat").forEach(
+      (el) => (el.textContent = Game.player.stats.score)
+    );
     destroy(Game);
     // show the blingy "win" screen to the user
     showScreen("realWin");
@@ -889,18 +913,19 @@
   }
 
   //go to the next Stage
-  nextStage = function nextStage(){
+  nextStage = function nextStage() {
     showScreen("game");
     console.log(`You are now playing Stage: ${Game.stage}`);
     sfx["rubber"].play();
     loadNextLevel(Game);
-  }
+  };
 
   // set the end-screen message to show
   // how well the player did
   function setEndScreenValues(score, gold) {
     $$(".xp-stat").forEach((el) => (el.textContent = Math.floor(score)));
     $$(".gold-stat").forEach((el) => (el.textContent = gold));
+    $$(".score-stat").forEach((el) => (el.textContent = Game.score));
   }
 
   // updates the contents of the inventory UI
