@@ -193,8 +193,8 @@
     renderStats(game.player.stats);
 
     //bug list for win screen
-    if(currentBug === ""){
-      game.listOfBugs.push("earwig", "fly", "termite", "mantis", "spider");
+    if(game.currentBug === ""){
+      game.listOfBugs = ["earwig", "fly", "termite", "mantis", "spider"];
     }
 
     // kick everything off
@@ -215,6 +215,9 @@
   function destroy(game) {
     // remove all listening event handlers
     removeListeners(game);
+
+    //clear classes on the bug img
+    clearBug();
 
     // tear everything down and
     // reset all our variables back
@@ -478,7 +481,7 @@
   function checkItem(entity) {
     const key = entity._x + "," + entity._y;
     if (key == Game.amulet) {
-      renderBug();//maybe move this into win()
+      //renderBug();//maybe move this into win()
       // the amulet is hit initiate the win flow below
       //check if level is cleared or game is won
       Game.stage == Game.maxStage ? realWin() : win();
@@ -729,23 +732,31 @@
     //amulet image should be an image of the item that bug gives you
     var bugList = Game.listOfBugs;
     const el = $("#bug");
-    console.log("current: " + Game.currentBug);
+
     if(Game.currentBug !== ""){
       el.classList.remove(Game.currentBug);
     }
     void el.offsetHeight; // trigger CSS reflow
     var random = Math.floor(Math.random() * bugList.length);
     var newBug = bugList[random];
-    currentBug = newBug;
-    console.log("Current is now new: " + currentBug)
-    //TODO remove the bug we just got
-    bugList.pop(newBug);
+    Game.currentBug = newBug;
+
+    //remove the bug we just got
+    bugList.splice(bugList.indexOf(newBug),1);
     console.log(bugList);
     el.classList.add(newBug);
   }
 
+  function clearBug(){
+    const el = $("#bug");
+    if(Game.currentBug !== ""){
+      el.classList.remove(Game.currentBug);
+    }
+  }
+
   // this gets called when the player clears a stage
   function win() {
+    renderBug();
     Game.engine.lock();
     // play the win sound effect a bunch of times
     for (let i = 0; i < 5; i++) {
