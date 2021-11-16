@@ -56,18 +56,17 @@
             <input type="radio"
                    value="instructions"
                    class="nes-radio is-dark"
-                   name="menu-items"
-                   checked/>
+                   name="menu-items">
             <span>Story</span>
           </label>
 		  <br/>
-          <label>
+          <!-- <label>
             <input type="radio"
                    value="settings"
                    class="nes-radio is-dark"
                    name="menu-items"/>
             <span>Settings</span>
-          </label>
+          </label> -->
 		  <br/>
           <label>
             <input type="radio"
@@ -145,7 +144,8 @@
       <p class="nes-container is-rounded is-dark">Congrats! <br> You Win!</p>
       <div class="nes-container is-rounded is-dark">
         <p><div class="sprite amulet"></div></p>
-        <p>You found all your friends in the house. Time to find a new home</p>
+        <p>You found all your friends in the neighborhood. Time to find a new home!</p>
+        <p>Your score for the entire session: <span class="score-stat"></span> points.</p>
       </div>
       <button class="nes-btn is-error action">Main Menu</button>
     </div>
@@ -157,7 +157,7 @@
         <div class="sprite tomb"></div>
         <p>Oh no,The Human exterminated you, your family, and everyone you know. </p>
         <p>You're dead.</p>
-        <p>You went as far as Stage <span class="gold-stat"></span> before you died</p>
+        <p>You went as far as Stage <span class="gold-stat"></span> with a score of <span class="score-stat"></span> before you died</p>
       </div>
       <button class="nes-btn is-success action">Ok</button>
     </div>
@@ -169,7 +169,7 @@
       <div id="hud" class="nes-container is-rounded is-dark"></div>
       <div id="inventory" class="nes-container is-rounded is-dark">
         <div>
-          <p>Example inventory</p>
+          <p>Your inventory</p>
           <ul></ul>
           <span class="toggle">X</span>
         </div>
