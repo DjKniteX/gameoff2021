@@ -2,6 +2,8 @@
 
 ## by Team SKYNITE
 
+**DEV Blog:** https://blog.nikkix.me
+
 Main Team:
 
 - Nikki
