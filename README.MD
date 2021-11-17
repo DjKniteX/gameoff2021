@@ -1,14 +1,18 @@
-Built using Roguelike Browser Boiler plate by chr15m
+# Built using Roguelike Browser Boiler plate by chr15m
+
+## by Team SKYNITE
 
 Main Team:
-Nikki
-Matthew
-Quintin
+
+- Nikki
+- Matthew
+- Quintin
 
 Addtional Art by:
-Nikki
-Matthew
-husalnawar25
+
+- Nikki
+- Matthew
+- husalnawar25
 
 Additional audio/sounds:
 Quintin
