@@ -27,7 +27,7 @@
       "@": [40, 0], // player
       ".": [32, 32], // floor
       M: [88, 0], // monster
-      "*": [72, 24], // treasure chest
+      "*": [80, 56], // treasure chest
       g: [64, 40], // gold
       x: [56, 32], // axe
       p: [56, 64], // potion
@@ -166,7 +166,7 @@
     currentBug: "",
     currentItem: "",
     listOfBugs: [],
-    listOfItems: []
+    listOfItems: [],
   };
 
   // this gets called by the menu system
@@ -195,7 +195,7 @@
     renderStats(game.player.stats);
 
     //bug list for win screen
-    if(game.currentBug === ""){
+    if (game.currentBug === "") {
       game.listOfBugs = ["earwig", "fly", "termite", "mantis", "spider"];
       game.listOfItems = ["pincer", "wings", "acid", "mantisClaws", "silk"];
     }
@@ -726,7 +726,7 @@
   }
 
   //show a bug that you have rescued
-  function renderBug(){
+  function renderBug() {
     //change the class of the image to be a random bug
     //when you choose a bug remove it from the option of bugs to get
     //fix CSS for the bugs and stuff
@@ -734,7 +734,7 @@
     var bugList = Game.listOfBugs;
     const el = $("#bug");
 
-    if(Game.currentBug !== ""){
+    if (Game.currentBug !== "") {
       el.classList.remove(Game.currentBug);
     }
     void el.offsetHeight; // trigger CSS reflow
@@ -743,27 +743,27 @@
     Game.currentBug = newBug;
 
     //get the bugs item
-    renderNewItem()
+    renderNewItem();
 
     //remove the bug we just got
-    bugList.splice(bugList.indexOf(newBug),1);
+    bugList.splice(bugList.indexOf(newBug), 1);
     console.log(bugList);
     el.classList.add(newBug);
   }
 
-  function clearBug(){
+  function clearBug() {
     const el = $("#bug");
     const it = $("#item");
-    if(Game.currentBug !== ""){
+    if (Game.currentBug !== "") {
       el.classList.remove(Game.currentBug);
-      it.classList.remove(Game.currentItem);  
+      it.classList.remove(Game.currentItem);
     }
   }
 
-  function renderNewItem(){
+  function renderNewItem() {
     const el = $("#item");
 
-    if(Game.currentItem !== ""){
+    if (Game.currentItem !== "") {
       el.classList.remove(Game.currentItem);
     }
 
@@ -771,10 +771,10 @@
     var newItem = Game.listOfItems[Game.listOfBugs.indexOf(Game.currentBug)];
 
     //TODO when all items are decided
-    if(newItem === "mantisClaws"){
+    if (newItem === "mantisClaws") {
       el.classList.add(newItem);
-    }else{
-      switch(newItem){
+    } else {
+      switch (newItem) {
         case "pincer":
           el.classList.add("item2");
           break;
