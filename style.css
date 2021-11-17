@@ -257,6 +257,35 @@ a:hover {
   text-align: left;
 }
 
+/* bugs */
+
+#bug{
+  display: block;
+  width: 8px;
+  margin: 80px auto;
+  height: 8px;
+  image-rendering: pixelated;
+  transform: scale(20);
+}
+
+.earwig{
+  content: url(bigwig.png);
+}
+.fly{
+  content: url(bigfly.png);
+}
+.termite{
+  content: url(termite.png);
+}
+.mantis{
+  content: url(mr.flea.png);
+}
+.spider{
+  content: url(blue.png);
+  transform: scale(25);
+}
+
+
 /* credits page interface */
 
 #credits ul {
@@ -269,7 +298,7 @@ a:hover {
   margin: 0.5em 0px;
 }
 
-.sprite {
+#item {
   display: block;
   width: 8px;
   height: 8px;
@@ -290,8 +319,20 @@ a:hover {
   transform: none;
 }
 
-.amulet {
+.mantisClaws {
   background-position: -0px -64px;
+}
+.item2 {
+  background-position: -8px -64px;
+}
+.item3 {
+  background-position: -16px -64px;
+}
+.item4 {
+  background-position: -24px -64px;
+}
+.item5 {
+  background-position: -32px -64px;
 }
 
 .tomb {
