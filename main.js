@@ -759,6 +759,8 @@
     const it = $("#item");
     if(Game.currentBug !== ""){
       el.classList.remove(Game.currentBug);
+    }
+    if(Game.currentItem !== ""){
       it.classList.remove(Game.currentItem);  
     }
   }

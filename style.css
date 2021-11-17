@@ -285,6 +285,19 @@ a:hover {
   transform: scale(25);
 }
 
+.bugWin1{
+  width: 8px;
+  image-rendering: pixelated;
+  transform: scale(8);
+}
+
+.bugWin2{
+  width: 8px;
+  margin: 0 0 15px 122px;
+  image-rendering: pixelated;
+  transform: scale(8);
+}
+
 
 /* credits page interface */
 
