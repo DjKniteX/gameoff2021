@@ -164,7 +164,9 @@
     score: 0,
     hp: 12,
     currentBug: "",
-    listOfBugs: []
+    currentItem: "",
+    listOfBugs: [],
+    listOfItems: []
   };
 
   // this gets called by the menu system
@@ -195,6 +197,7 @@
     //bug list for win screen
     if(game.currentBug === ""){
       game.listOfBugs = ["earwig", "fly", "termite", "mantis", "spider"];
+      game.listOfItems = ["pincer", "wings", "acid", "mantisClaws", "silk"];
     }
 
     // kick everything off
@@ -237,6 +240,7 @@
       game.score = 0;
       game.hp = 10;
       game.currentBug = "";
+      game.currentItem = "";
     }
 
     // hide the toast message
@@ -741,6 +745,9 @@
     var newBug = bugList[random];
     Game.currentBug = newBug;
 
+    //get the bugs item
+    renderNewItem()
+
     //remove the bug we just got
     bugList.splice(bugList.indexOf(newBug),1);
     console.log(bugList);
@@ -749,8 +756,41 @@
 
   function clearBug(){
     const el = $("#bug");
+    const it = $("#item");
     if(Game.currentBug !== ""){
       el.classList.remove(Game.currentBug);
+      it.classList.remove(Game.currentItem);  
+    }
+  }
+
+  function renderNewItem(){
+    const el = $("#item");
+
+    if(Game.currentItem !== ""){
+      el.classList.remove(Game.currentItem);
+    }
+
+    var itemIndex = Game.listOfBugs.indexOf(Game.currentBug);
+    var newItem = Game.listOfItems[Game.listOfBugs.indexOf(Game.currentBug)];
+
+    //TODO when all items are decided
+    if(newItem === "mantisClaws"){
+      el.classList.add(newItem);
+    }else{
+      switch(newItem){
+        case "pincer":
+          el.classList.add("item2");
+          break;
+        case "wings":
+          el.classList.add("item3");
+          break;
+        case "acid":
+          el.classList.add("item4");
+          break;
+        case "silk":
+          el.classList.add("item5");
+          break;
+      }
     }
   }
 
