@@ -679,9 +679,6 @@
     // roll a dice to see if the player hits
     let roll1 = ROT.RNG.getItem([1, 2, 3, 4, 5, 6]);
     // a hit is a four or more
-    // if (hitter.inventory[0]) {
-    //   roll1 += 1;
-    // }
 
     if (hitter.name == "you") {
       if (Game.player.inventory[0].includes("x")) {
