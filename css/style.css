@@ -91,7 +91,7 @@ a:hover {
 }
 
 #title {
-  background-image: url(bug1.jpg);
+  background-image: url("../assets/bug1.jpg");
   background-size: cover;
   animation: 20s para infinite ease;
 }
@@ -269,19 +269,19 @@ a:hover {
 }
 
 .earwig {
-  content: url(bigwig.png);
+  content: url("../assets/bigwig.png");
 }
 .fly {
-  content: url(bigfly.png);
+  content: url("../assets/bigfly.png");
 }
 .termite {
-  content: url(termite.png);
+  content: url("../assets/termite.png");
 }
 .mantis {
-  content: url(mr.flea.png);
+  content: url("../assets/mr.flea.png");
 }
 .spider {
-  content: url(blue.png);
+  content: url("../assets/blue.png");
   transform: scale(25);
 }
 
@@ -309,7 +309,7 @@ a:hover {
   -ms-interpolation-mode: nearest-neighbor;
   image-rendering: pixelated;
   transform: scale(8);
-  background-image: url("colored_tilemap_packed.png");
+  background-image: url("../assets/colored_tilemap_packed.png");
   margin: 80px auto;
 }
 
@@ -383,7 +383,7 @@ a:hover {
 }
 
 #win {
-  background: url(01coin.gif);
+  background: url("../assets/01coin.gif");
   background-size: 20%;
 }
 

@@ -10,7 +10,7 @@
   // It's the "microrogue" tileset
 
   const tileSet = document.createElement("img");
-  tileSet.src = "colored_tilemap_packed.png";
+  tileSet.src = "assets/colored_tilemap_packed.png";
 
   // This is where you specify which tile
   // is used to draw each "character"
@@ -759,9 +759,9 @@
     }
   }
 
-  function clearItem(){
+  function clearItem() {
     const el = $("#item");
-    if(Game.currentItem !== ""){
+    if (Game.currentItem !== "") {
       el.classList.remove(Game.currentItem);
     }
   }
