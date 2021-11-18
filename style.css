@@ -259,7 +259,7 @@ a:hover {
 
 /* bugs */
 
-#bug{
+#bug {
   display: block;
   width: 8px;
   margin: 80px auto;
@@ -268,23 +268,22 @@ a:hover {
   transform: scale(20);
 }
 
-.earwig{
+.earwig {
   content: url(bigwig.png);
 }
-.fly{
+.fly {
   content: url(bigfly.png);
 }
-.termite{
+.termite {
   content: url(termite.png);
 }
-.mantis{
+.mantis {
   content: url(mr.flea.png);
 }
-.spider{
+.spider {
   content: url(blue.png);
   transform: scale(25);
 }
-
 
 /* credits page interface */
 
