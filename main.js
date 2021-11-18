@@ -196,8 +196,8 @@
 
     //bug list for win screen
     if (game.currentBug === "") {
-      game.listOfBugs = ["earwig", "fly", "termite", "mantis", "spider"];
-      game.listOfItems = ["pincer", "wings", "acid", "mantisClaws", "silk"];
+      game.listOfBugs = ["earwig", "fly", "termite", "mantis", "beetle"];
+      game.listOfItems = ["pincer", "wings", "acid", "mantisClaws", "horn"];
     }
 
     // kick everything off
@@ -221,6 +221,7 @@
 
     //clear classes on the bug img
     clearBug();
+    clearItem();
 
     // tear everything down and
     // reset all our variables back
@@ -753,12 +754,15 @@
 
   function clearBug() {
     const el = $("#bug");
-    const it = $("#item");
     if (Game.currentBug !== "") {
       el.classList.remove(Game.currentBug);
     }
+  }
+
+  function clearItem(){
+    const el = $("#item");
     if(Game.currentItem !== ""){
-      it.classList.remove(Game.currentItem);
+      el.classList.remove(Game.currentItem);
     }
   }
 
@@ -771,26 +775,9 @@
 
     var itemIndex = Game.listOfBugs.indexOf(Game.currentBug);
     var newItem = Game.listOfItems[Game.listOfBugs.indexOf(Game.currentBug)];
+    Game.currentItem = newItem;
 
-    //TODO when all items are decided
-    if (newItem === "mantisClaws") {
-      el.classList.add(newItem);
-    } else {
-      switch (newItem) {
-        case "pincer":
-          el.classList.add("item2");
-          break;
-        case "wings":
-          el.classList.add("item3");
-          break;
-        case "acid":
-          el.classList.add("item4");
-          break;
-        case "silk":
-          el.classList.add("item5");
-          break;
-      }
-    }
+    el.classList.add(newItem);
   }
 
   // this gets called when the player clears a stage
@@ -1282,6 +1269,8 @@
       $("#arrows").style.display = "block";
       Game.touchScreen = true;
     }
+    clearBug();
+    clearItem();
     init(Game);
   }
 

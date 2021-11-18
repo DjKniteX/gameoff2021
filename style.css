@@ -280,7 +280,7 @@ a:hover {
 .mantis{
   content: url(mr.flea.png);
 }
-.spider{
+.beetle{
   content: url(blue.png);
   transform: scale(25);
 }
@@ -335,16 +335,16 @@ a:hover {
 .mantisClaws {
   background-position: -0px -64px;
 }
-.item2 {
+.wings {
   background-position: -8px -64px;
 }
-.item3 {
+.acid {
   background-position: -16px -64px;
 }
-.item4 {
+.pincer {
   background-position: -24px -64px;
 }
-.item5 {
+.horn {
   background-position: -32px -64px;
 }
 
