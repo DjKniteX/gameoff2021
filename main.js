@@ -29,8 +29,11 @@
       M: [88, 0], // monster
       "*": [80, 56], // treasure chest
       g: [64, 40], // gold
-      x: [56, 32], // axe
-      p: [56, 64], // potion
+      x: [0, 64], // mantisClaws
+      w: [8, 64], //wings
+      p: [16, 64], // acid
+      q: [24, 64], // pincer
+      h: [32, 64], //horn
       a: [40, 32], // tree 1
       b: [32, 40], // tree 2
       c: [40, 40], // tree 3
@@ -44,6 +47,13 @@
       "═": [8, 72], // room edge
       "║": [32, 72], // room edge
       o: [40, 72], // room corner
+    },
+    items: { //idk if this should be here but fuck it
+      "mantisClaws": "x",
+      "pincer": "q",
+      "acid": "p",
+      "wings": "w",
+      "horn": "h"
     },
     width: 25,
     height: 40,
@@ -167,6 +177,7 @@
     currentItem: "",
     listOfBugs: [],
     listOfItems: [],
+    inventory: []
   };
 
   // this gets called by the menu system
@@ -242,6 +253,7 @@
       game.hp = 10;
       game.currentBug = "";
       game.currentItem = "";
+      game.inventory = [];
     }
 
     // hide the toast message
@@ -455,10 +467,7 @@
       // the name to display in combat
       name: "you",
       // what the player is carrying
-      inventory: [
-        ["x", "Praying Mantis Arm (+5)"],
-        ["p", "Trash"],
-      ],
+      inventory: Game.inventory,
       // the player's stats
       stats: {
         name: "Quintin",
@@ -698,10 +707,12 @@
     // a hit is a four or more
 
     if (hitter.name == "you") {
-      if (Game.player.inventory[0].includes("x")) {
-        roll1 += 1;
-      } else {
-        console.log("what");
+      if(Game.player.inventory.length !== 0){
+          if (Game.player.inventory[0].includes("x")) {
+            roll1 += 1;
+          } else {
+            console.log("what");
+        }
       }
     }
 
@@ -783,6 +794,7 @@
   // this gets called when the player clears a stage
   function win() {
     renderBug();
+    addInventory(Game.currentItem);
     Game.engine.lock();
     // play the win sound effect a bunch of times
     for (let i = 0; i < 5; i++) {
@@ -987,7 +999,7 @@
           },
           [
             el("div", {
-              className: "sprite",
+              className: "item",
               style:
                 "background-position: -" + tile[0] + "px -" + tile[1] + "px;",
             }),
@@ -996,6 +1008,12 @@
         )
       );
     });
+  }
+
+  //add items to inventory
+  function addInventory(item){
+    var itemTileMapping = tileOptions.items[item];
+    Game.inventory.push([itemTileMapping, item.toUpperCase()]);
   }
 
   // called when an inventory item is selected
