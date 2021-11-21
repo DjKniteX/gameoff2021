@@ -91,7 +91,7 @@ a:hover {
 }
 
 #title {
-  background-image: url(bug1.jpg);
+  background-image: url("../assets/bug1.jpg");
   background-size: cover;
   animation: 20s para infinite ease;
 }
@@ -259,7 +259,7 @@ a:hover {
 
 /* bugs */
 
-#bug{
+#bug {
   display: block;
   width: 8px;
   margin: 80px auto;
@@ -268,36 +268,22 @@ a:hover {
   transform: scale(20);
 }
 
-.earwig{
-  content: url(bigwig.png);
+.earwig {
+  content: url("../assets/bigwig.png");
 }
-.fly{
-  content: url(bigfly.png);
+.fly {
+  content: url("../assets/bigfly.png");
 }
-.termite{
-  content: url(termite.png);
+.termite {
+  content: url("../assets/termite.png");
 }
-.mantis{
-  content: url(mr.flea.png);
+.mantis {
+  content: url("../assets/mr.flea.png");
 }
-.beetle{
-  content: url(blue.png);
+.spider {
+  content: url("../assets/blue.png");
   transform: scale(25);
 }
-
-.bugWin1{
-  width: 8px;
-  image-rendering: pixelated;
-  transform: scale(8);
-}
-
-.bugWin2{
-  width: 8px;
-  margin: 0 0 15px 122px;
-  image-rendering: pixelated;
-  transform: scale(8);
-}
-
 
 /* credits page interface */
 
@@ -323,7 +309,7 @@ a:hover {
   -ms-interpolation-mode: nearest-neighbor;
   image-rendering: pixelated;
   transform: scale(8);
-  background-image: url("colored_tilemap_packed.png");
+  background-image: url("../assets/colored_tilemap_packed.png");
   margin: 80px auto;
 }
 
@@ -397,7 +383,7 @@ a:hover {
 }
 
 #win {
-  background: url(01coin.gif);
+  background: url("../assets/01coin.gif");
   background-size: 20%;
 }
 
