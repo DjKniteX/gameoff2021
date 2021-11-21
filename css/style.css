@@ -280,7 +280,7 @@ a:hover {
 .mantis {
   content: url("../assets/mr.flea.png");
 }
-.spider {
+.beetle {
   content: url("../assets/blue.png");
   transform: scale(25);
 }

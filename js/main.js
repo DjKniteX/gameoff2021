@@ -704,15 +704,20 @@
     let msg = [];
     // roll a dice to see if the player hits
     let roll1 = ROT.RNG.getItem([1, 2, 3, 4, 5, 6]);
+    console.log("Roll before: " + roll1);
     // a hit is a four or more
-
+    var items = Game.player.inventory;
     if (hitter.name == "you") {
-      if(Game.player.inventory.length !== 0){
-          if (Game.player.inventory[0].includes("x")) {
+      if(items.length !== 0){
+        items.forEach(function (item, idx){
+          if(item.includes("x")){
+            roll1 += 2;
+          }
+          if(item.includes("h")){
             roll1 += 1;
-          } else {
-            console.log("what");
-        }
+          }
+        });
+        console.log("Roll after: " + roll1);
       }
     }
 
