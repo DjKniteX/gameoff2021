@@ -183,6 +183,7 @@
     listOfBugs: [],
     listOfItems: [],
     inventory: [],
+    hasWings: false
   };
 
   // this gets called by the menu system
@@ -260,6 +261,7 @@
       game.currentBug = "";
       game.currentItem = "";
       game.inventory = [];
+      game.hasWings = false;
     }
 
     // hide the toast message
@@ -480,6 +482,7 @@
         hp: Game.hp,
         score: Game.score,
         stage: Game.stage,
+        damage: 5,
       },
       // the ROT.js scheduler calls this method when it is time
       // for the player to act
@@ -603,8 +606,10 @@
       character: "M",
       // the name to display in combat
       name: "The Human",
+      //switch to flip if player is moving faster
+      canMove: false,
       // the monster's stats
-      stats: { hp: 10 },
+      stats: { hp: 10, damage: 5 },
       // called by the ROT.js scheduler
       act: monsterAct,
     };
@@ -644,6 +649,17 @@
     // square then initiate combat
     if (path.length <= 1) {
       combat(m, p);
+    } else if(Game.hasWings && !m.canMove){
+      m.canMove = true;
+    } else if(Game.hasWings && m.canMove){
+      // draw whatever was on the last tile the monster was one
+      drawTile(Game, m._x + "," + m._y, m);
+      // the player is safe for now so update the monster position
+      // to the first step on the path and redraw
+      m._x = path[0][0];
+      m._y = path[0][1];
+      drawTile(Game, m._x + "," + m._y);
+      m.canMove = false;
     } else {
       // draw whatever was on the last tile the monster was one
       drawTile(Game, m._x + "," + m._y, m);
@@ -710,15 +726,20 @@
     let msg = [];
     // roll a dice to see if the player hits
     let roll1 = ROT.RNG.getItem([1, 2, 3, 4, 5, 6]);
+    console.log("Roll before: " + roll1);
     // a hit is a four or more
-
+    var items = Game.player.inventory;
     if (hitter.name == "you") {
-      if (Game.player.inventory.length !== 0) {
-        if (Game.player.inventory[0].includes("x")) {
-          roll1 += 1;
-        } else {
-          console.log("what");
-        }
+      if(items.length !== 0){
+        items.forEach(function (item, idx){
+          if(item.includes("x")){
+            roll1 += 2;
+          }
+          if(item.includes("h")){
+            roll1 += 1;
+          }
+        });
+        console.log("Roll after: " + roll1);
       }
     }
 
@@ -726,7 +747,22 @@
       // add to the combat message
       msg.push(hitter.name + " hit " + receiver.name + ".");
       // remove hitpoints from the receiver
-      receiver.stats.hp -= roll1;
+      var hitterItems = [];
+      if(hitter.inventory) {
+        hitterItems = hitter.inventory;
+      }
+      var damage = hitter.stats.damage;
+      if(hitterItems.length !== 0){
+        hitterItems.forEach(function (item, idx){
+          if(item.includes("q")){//pincer
+            damage += 2;
+          }
+          if(item.includes("p")){//acid
+            damage += 1;
+          }
+        });
+      }
+      receiver.stats.hp -= damage;
       renderStats(Game.player.stats);
       if (receiver.name == "you") {
         // play the hit sound
@@ -744,7 +780,7 @@
     }
     // check if the receiver has died
     checkDeath(receiver);
-    console.log(`${hitter.name} did ${roll1} damage`);
+    console.log(`${hitter.name} did ${damage} damage`);
   }
 
   //show a bug that you have rescued
@@ -797,6 +833,8 @@
     var itemIndex = Game.listOfBugs.indexOf(Game.currentBug);
     var newItem = Game.listOfItems[Game.listOfBugs.indexOf(Game.currentBug)];
     Game.currentItem = newItem;
+
+    Game.listOfItems.splice(Game.listOfItems.indexOf(newItem), 1);
 
     el.classList.add(newItem);
   }
@@ -1011,7 +1049,7 @@
           },
           [
             el("div", {
-              className: "item",
+              className: "sprite",
               style:
                 "background-position: -" + tile[0] + "px -" + tile[1] + "px;",
             }),
@@ -1026,6 +1064,7 @@
   function addInventory(item) {
     var itemTileMapping = tileOptions.items[item];
     Game.inventory.push([itemTileMapping, item.toUpperCase()]);
+    if(item === "wings"){Game.hasWings = true;}
   }
 
   // called when an inventory item is selected
@@ -1052,6 +1091,7 @@
     const st = $("#hud");
     st.innerHTML = "";
     for (let s in stats) {
+      if(s === "damage"){continue;}
       attach(st, el("span", {}, [s.toUpperCase() + ": " + stats[s]]));
     }
   }
