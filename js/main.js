@@ -1049,7 +1049,7 @@
           },
           [
             el("div", {
-              className: "item",
+              className: "sprite",
               style:
                 "background-position: -" + tile[0] + "px -" + tile[1] + "px;",
             }),

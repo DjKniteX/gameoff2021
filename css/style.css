@@ -278,7 +278,7 @@ a:hover {
   content: url("../assets/termite.png");
 }
 .mantis {
-  content: url("../assets/mr.flea.png");
+  content: url("../assets/mantis.png");
 }
 .beetle {
   content: url("../assets/blue.png");
@@ -309,7 +309,21 @@ a:hover {
 #credits ul li {
   margin: 0.5em 0px;
 }
-
+.sprite{
+  display: block;
+  width: 8px;
+  height: 8px;
+  image-rendering: optimizeSpeed;
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: pixelated;
+  transform: scale(1);
+  background-image: url("../assets/colored_tilemap_packed.png");
+  margin: 80px auto;
+}
 #item {
   display: block;
   width: 8px;
