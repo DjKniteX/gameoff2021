@@ -48,12 +48,13 @@
       "║": [32, 72], // room edge
       o: [40, 72], // room corner
     },
-    items: { //idk if this should be here but fuck it
-      "mantisClaws": "x",
-      "pincer": "q",
-      "acid": "p",
-      "wings": "w",
-      "horn": "h"
+    items: {
+      //idk if this should be here but fuck it
+      mantisClaws: "x",
+      pincer: "q",
+      acid: "p",
+      wings: "w",
+      horn: "h",
     },
     width: 25,
     height: 40,
@@ -79,6 +80,10 @@
   // You can generate your own and click the "copy" button
   // to get the sound code and paste it here.
   // Play sounds using this code: `sfxr[soundname].play()`
+
+  const mainMusic = new Audio("audio/main.wav");
+  const spray = new Audio("audio/spray.wav");
+  const squash = new Audio("audio/squash.wav");
 
   const sfx = {
     rubber:
@@ -215,6 +220,7 @@
     // kick everything off
     game.engine = new ROT.Engine(game.scheduler);
     game.engine.start();
+    mainMusic.play();
   }
 
   //load the next level of the game
@@ -758,8 +764,12 @@
       }
       receiver.stats.hp -= damage;
       renderStats(Game.player.stats);
-      // play the hit sound
-      sfx["hit"].play();
+      if (receiver.name == "you") {
+        // play the hit sound
+        spray.play();
+      } else {
+        sfx["hit"].play();
+      }
     } else {
       sfx["miss"].play();
       msg.push(hitter.name + " missed " + receiver.name + ".");
@@ -863,6 +873,7 @@
     );
     destroy(Game);
     // show the blingy "win" screen to the user
+    mainMusic.pause();
     showScreen("realWin");
   }
 
@@ -879,7 +890,8 @@
     // we stop listening for user input while the ghost animates
     removeListeners(Game);
     // play the lose sound effect
-    sfx["lose"].play();
+    squash.play();
+    mainMusic.pause();
     // wait 2 seconds for the ghost animation to finish
     setTimeout(function () {
       // set our stats for the end screen
@@ -1049,7 +1061,7 @@
   }
 
   //add items to inventory
-  function addInventory(item){
+  function addInventory(item) {
     var itemTileMapping = tileOptions.items[item];
     Game.inventory.push([itemTileMapping, item.toUpperCase()]);
     if(item === "wings"){Game.hasWings = true;}
